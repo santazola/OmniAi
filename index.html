@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0f">
+  <title>OmniAI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0b0b0f;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 900px;
+      margin: auto;
+      padding: 24px 18px 50px;
+    }
+
+    header {
+      padding: 20px 0 30px;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #7c5cff;
+    }
+
+    .subtitle {
+      color: #9b9ba5;
+      margin-top: 7px;
+      font-size: 15px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #171421, #101014);
+      border: 1px solid #292632;
+      border-radius: 24px;
+      padding: 25px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: 27px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #aaa9b4;
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: #141419;
+      border: 1px solid #28282f;
+      border-radius: 20px;
+      padding: 20px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #7c5cff;
+    }
+
+    .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .card h2 {
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      color: #92929c;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .chat {
+      margin-top: 22px;
+      background: #141419;
+      border: 1px solid #28282f;
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    .chat h2 {
+      margin-bottom: 14px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      resize: vertical;
+      background: #0c0c10;
+      border: 1px solid #30303a;
+      border-radius: 14px;
+      color: white;
+      padding: 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #7c5cff;
+    }
+
+    button {
+      margin-top: 12px;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: #7c5cff;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.99);
+    }
+
+    #result {
+      display: none;
+      margin-top: 15px;
+      background: #0c0c10;
+      border-radius: 14px;
+      padding: 15px;
+      color: #c8c7d0;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      text-align: center;
+      color: #666672;
+      margin-top: 35px;
+      font-size: 13px;
+    }
+
+    @media (min-width: 700px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <header>
+      <div class="logo">Omni<span>AI</span></div>
+      <div class="subtitle">Your AI Social Media Manager</div>
+    </header>
+
+    <section class="hero">
+      <h1>What do you want to create?</h1>
+      <p>
+        Research ideas, create content, plan your social media,
+        and build engaging videos with OmniAI.
+      </p>
+    </section>
+
+    <section class="grid">
+
+      <div class="card" onclick="selectTool('Research')">
+        <div class="icon">🔎</div>
+        <h2>Research</h2>
+        <p>Research topics and discover useful information online.</p>
+      </div>
+
+      <div class="card" onclick="selectTool('Content')">
+        <div class="icon">✍️</div>
+        <h2>Create Content</h2>
+        <p>Generate posts, captions, hooks and hashtags.</p>
+      </div>
+
+      <div class="card" onclick="selectTool('Video')">
+        <div class="icon">🎬</div>
+        <h2>Create Video</h2>
+        <p>Turn ideas and scripts into social media videos.</p>
+      </div>
+
+      <div class="card" onclick="selectTool('Image')">
+        <div class="icon">🖼️</div>
+        <h2>Create Image</h2>
+        <p>Create graphics, thumbnails and social media images.</p>
+      </div>
+
+      <div class="card" onclick="selectTool('Planner')">
+        <div class="icon">📅</div>
+        <h2>Content Planner</h2>
+        <p>Plan your posts and organize your content calendar.</p>
+      </div>
+
+      <div class="card" onclick="selectTool('Social Media')">
+        <div class="icon">📱</div>
+        <h2>Social Media</h2>
+        <p>Manage your social platforms from one place.</p>
+      </div>
+
+    </section>
+
+    <section class="chat">
+      <h2>Ask OmniAI</h2>
+
+      <textarea
+        id="prompt"
+        placeholder="Example: Give me 10 TikTok video ideas for a Nigerian business..."
+      ></textarea>
+
+      <button onclick="askOmni()">Ask OmniAI</button>
+
+      <div id="result"></div>
+    </section>
+
+    <footer>
+      OmniAI © 2026
+    </footer>
+
+  </main>
+
+  <script>
+    function selectTool(tool) {
+      document.getElementById("prompt").value =
+        "I want to use OmniAI for " + tool + ". Help me get started.";
+      document.getElementById("prompt").focus();
+    }
+
+    function askOmni() {
+      const prompt = document.getElementById("prompt").value.trim();
+      const result = document.getElementById("result");
+
+      if (!prompt) {
+        result.style.display = "block";
+        result.textContent = "Please enter what you want OmniAI to do.";
+        return;
+      }
+
+      result.style.display = "block";
+      result.textContent =
+        "OmniAI received your request:\n\n" +
+        prompt +
+        "\n\nAI connection will be added in the next step.";
+    }
+  </script>
+
+</body>
+</html>
